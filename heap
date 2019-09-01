@@ -1,0 +1,50 @@
+const int maxn = 100;
+heap[maxn];
+void downadjust(int low, int high) {
+	int i = low, int j = 2 * i;   //i是待调整结点下标，j是待比较的子节点下标 
+	while(j <= high) {
+		if(j + 1 <= high && heap[j + 1] > heap[j])  //两个子节点先选出较大那个 
+			j = j + 1;
+		if(heap[j] > heap[i]) {  //如果子节点比父节点大，交换，并向下层继续比较 
+			swap(heap[i], heap[j]);
+			i = j;
+			j = 2 * i;
+		} else {
+			break;
+		}
+	} 
+} 
+
+void createheap() {   //建堆，从后往前向上调整 
+	for(int i = n / 2; i >= 1; i--)
+		downadjust(i, n);
+}
+
+void deletetop() {   //把最后一位填过来，再向下调整 
+	heap[1] = heap[n--];
+	downadjust(1, n);
+}
+
+void upadjust(int low, int high) {  //向上调整 
+	int i = high, j = i / 2;
+	while(j >= low) {    //直到j到达root为止 
+		if(heap[j] < heap[i]) {   //直到父节点大于子结点为止 
+			swap(heap[j], heap[i]);
+			i = j;
+			j = i / 2;
+		} else break;
+	}
+}
+
+void insert(int x) {  //先插在最后一位，再向上调整 
+	heap[++n] = x;
+	upright(1, n);
+}
+
+void heapsort() {   //堆排序，没看懂
+	createheap(); 
+	for(int i = n; i > 1; i--) {  
+		swap(heap[i], heap[j]);
+		downadjust(1, i -1);
+	}
+} 
